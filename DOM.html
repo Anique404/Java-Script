@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DOM Practice 1–40</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:18px;line-height:1.4}
+  h1{margin-bottom:8px}
+  section{border:1px solid #ddd;padding:12px;margin:12px 0;border-radius:6px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  button{cursor:pointer}
+  .hidden{display:none}
+  .card{padding:8px;border-radius:6px;background:#f9f9f9;border:1px solid #eee}
+  .dark{background:#222;color:#eee}
+  .badge{background:#eee;padding:2px 6px;border-radius:6px;font-size:12px}
+  .gallery img{max-width:100%}
+  .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6)}
+  .modal-box{background:white;padding:16px;border-radius:8px;max-width:90%;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+  .tabs button{margin-right:6px}
+  .accordion-item{border-top:1px dashed #ddd;padding:8px 0}
+  input, textarea, select{padding:6px;border-radius:4px;border:1px solid #ccc}
+  .star{font-size:24px;cursor:pointer}
+  .progress{height:18px;background:#eee;border-radius:8px;overflow:hidden}
+  .progress > div{height:100%;width:0}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+</style>
+</head>
+<body>
+
+<h1>DOM Practice — Tasks 1 to 40</h1>
+<p>Each numbered section implements one task. Read the code in the &lt;script&gt; below — functions are named <code>initTask1</code> ... <code>initTask40</code>.</p>
+
+<!-- BEGIN TASKS -->
+
+<!-- 1 -->
+<section id="task1">
+  <h2>1. Select by id and change text</h2>
+  <div class="card">
+    <p id="t1text">Original text</p>
+    <div class="row">
+      <input id="t1input" placeholder="New text" />
+      <button id="t1btn">Change Text</button>
+    </div>
+  </div>
+</section>
+
+<section id="task2">
+  <h2>2. Select by class and change background</h2>
+  <div class="card">
+    <div class="box to-change" style="padding:8px">Box A (class="to-change")</div>
+    <div class="box to-change" style="padding:8px">Box B (class="to-change")</div>
+    <div class="row">
+      <input id="t2color" type="color" value="#ffdd66" />
+      <button id="t2btn">Apply Background</button>
+    </div>
+  </div>
+</section>
+
+<section id="task3">
+  <h2>3. Change &lt;img&gt; src</h2>
+  <div class="card">
+    <img id="t3img" src="https://via.placeholder.com/200?text=Start" alt="" width="200" />
+    <div class="row">
+      <input id="t3src" placeholder="Image URL" />
+      <button id="t3btn">Change Image</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="task4">
+  <h2>4. Add &lt;p&gt; inside a &lt;div&gt;</h2>
+  <div class="card" id="t4div" style="min-height:40px">Parent DIV</div>
+  <div class="row">
+    <input id="t4txt" placeholder="Paragraph text" />
+    <button id="t4btn">Add Paragraph</button>
+  </div>
+</section>
+
+<section id="task5">
+  <h2>5. Remove last child of &lt;ul&gt;</h2>
+  <div class="card">
+    <ul id="t5ul">
+      <li>One</li><li>Two</li><li>Three</li>
+    </ul>
+    <div class="row">
+      <button id="t5remove">Remove last</button>
+      <button id="t5add">Add item</button>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="task6">
+  <h2>6. Get input value when a button clicked</h2>
+  <div class="card">
+    <input id="t6input" placeholder="Type something" />
+    <button id="t6btn">Read Value</button>
+    <p>Read: <span id="t6out">—</span></p>
+  </div>
+</section>
+
+
+<!-- 7 -->
+<section id="task7">
+  <h2>7. Change styles (color, font-size)</h2>
+  <div class="card">
+    <p id="t7p">Style me</p>
+    <div class="row">
+      <input id="t7color" type="color" value="#000000" />
+      <input id="t7size" type="number" value="16" min="8" max="72" /> px
+      <button id="t7btn">Apply</button>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="task8">
+  <h2>8. querySelectorAll & loop</h2>
+  <div class="card">
+    <div class="items">
+      <div class="item">A</div>
+      <div class="item">B</div>
+      <div class="item">C</div>
+    </div>
+    <button id="t8btn">Highlight All</button>
+  </div>
+</section>
+
+
+<!-- 9 -->
+<section id="task9">
+  <h2>9. Toggle CSS class on button click</h2>
+  <div class="card">
+    <p id="t9p">Toggle my class</p>
+    <button id="t9btn">Toggle Highlight</button>
+    <style>.highlight{background:yellow}</style>
+  </div>
+</section>
+
+
+<!-- 10 -->
+<section id="task10">
+  <h2>10. Change innerHTML</h2>
+  <div class="card">
+    <div id="t10box">Old content</div>
+    <button id="t10btn">Replace HTML</button>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="task11">
+  <h2>11. Add &lt;li&gt; when button clicked</h2>
+  <div class="card">
+    <ul id="t11ul"><li>Alpha</li></ul>
+    <input id="t11input" placeholder="New item text" />
+    <button id="t11btn">Add</button>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="task12">
+  <h2>12. Simple counter with + / -</h2>
+  <div class="card">
+    <button id="t12minus">-</button> <span id="t12display">0</span> <button id="t12plus">+</button>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="task13">
+  <h2>13. Show and hide</h2>
+  <div class="card">
+    <button id="t13btn">Toggle</button>
+    <div id="t13content" style="padding:8px;margin-top:8px;border:1px dashed #ccc">This can be shown/hidden</div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section id="task14">
+  <h2>14. Validate input (not empty)</h2>
+  <div class="card">
+    <input id="t14" placeholder="Required" />
+    <button id="t14btn">Submit</button>
+    <p id="t14err" style="color:red"></p>
+  </div>
+</section>
+
+<!-- 15 -->
+<section id="task15">
+  <h2>15. Dark mode toggle</h2>
+  <div class="card" id="t15area">
+    <p>Toggle the theme for this card</p>
+    <button id="t15btn">Toggle Dark</button>
+  </div>
+</section>
+
+<!-- 16 -->
+<section id="task16">
+  <h2>16. Change style on hover (JS events)</h2>
+  <div class="card">
+    <div id="t16box" style="padding:12px;border:1px solid #ccc;display:inline-block">Hover me</div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section id="task17">
+  <h2>17. Dropdown menu show on click</h2>
+  <div class="card">
+    <button id="t17btn">Open Menu</button>
+    <ul id="t17menu" class="hidden" style="list-style:none;padding:6px;margin:6px;border:1px solid #ddd;width:160px">
+      <li>Option 1</li>
+      <li>Option 2</li>
+      <li>Option 3</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 18 -->
+<section id="task18">
+  <h2>18. setAttribute & getAttribute</h2>
+  <div class="card">
+    <a id="t18link" href="https://example.com">Example</a>
+    <div class="row">
+      <input id="t18href" placeholder="New href" />
+      <button id="t18set">Set Href</button>
+      <button id="t18get">Get Href</button>
+    </div>
+    <p>Current: <span id="t18out">https://example.com</span></p>
+  </div>
+</section>
+
+<!-- 19 -->
+<section id="task19">
+  <h2>19. Disable/Enable a button</h2>
+  <div class="card">
+    <button id="t19target">Target</button>
+    <button id="t19toggle">Disable/Enable</button>
+  </div>
+</section>
+
+<!-- 20 -->
+<section id="task20">
+  <h2>20. Live character counter</h2>
+  <div class="card">
+    <textarea id="t20ta" rows="4" cols="40" placeholder="Type..."></textarea>
+    <p>Chars: <span id="t20count">0</span></p>
+  </div>
+</section>
+
+<!-- 21 -->
+<section id="task21">
+  <h2>21. Dynamic table from array of objects</h2>
+  <div class="card">
+    <div class="row">
+      <button id="t21gen">Generate Table</button>
+    </div>
+    <div id="t21out" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<!-- 22 -->
+<section id="task22">
+  <h2>22. Todo list (Add, Edit, Delete)</h2>
+  <div class="card">
+    <input id="t22input" placeholder="Task" /><button id="t22add">Add</button>
+    <ul id="t22list"></ul>
+  </div>
+</section>
+
+<!-- 23 -->
+<section id="task23">
+  <h2>23. Image slider (next/prev)</h2>
+  <div class="card">
+    <img id="t23img" src="https://via.placeholder.com/250" width="250" />
+    <div class="row">
+      <button id="t23prev">Prev</button>
+      <button id="t23next">Next</button>
+    </div>
+  </div>
+</section>
+
+<!-- 24 -->
+<section id="task24">
+  <h2>24. Drag and drop</h2>
+  <div class="card">
+    <div style="display:flex;gap:12px">
+      <div id="t24source" style="min-width:120px;padding:8px;border:1px solid #ccc">Drag me</div>
+      <div id="t24target" style="min-width:120px;padding:8px;border:1px dashed #aaa">Drop here</div>
+    </div>
+    <p id="t24msg"></p>
+  </div>
+</section>
+
+<!-- 25 -->
+<section id="task25">
+  <h2>25. Modal popup (open & close)</h2>
+  <div class="card">
+    <button id="t25open">Open Modal</button>
+    <div id="t25modal" class="modal hidden" style="display:none">
+      <div class="modal-box">
+        <p>This is modal content</p>
+        <button id="t25close">Close</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 -->
+<section id="task26">
+  <h2>26. Form validation with error messages</h2>
+  <div class="card">
+    <form id="t26form" novalidate>
+      <input id="t26name" placeholder="Name (min 3)" /><br/><br/>
+      <input id="t26email" placeholder="Email" /><br/><br/>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="t26err" style="color:red"></p>
+  </div>
+</section>
+
+<!-- 27 -->
+<section id="task27">
+  <h2>27. Tabs navigation</h2>
+  <div class="card">
+    <div class="tabs">
+      <button data-tab="a">Tab A</button>
+      <button data-tab="b">Tab B</button>
+      <button data-tab="c">Tab C</button>
+    </div>
+    <div id="t27a" class="tabcontent">Content A</div>
+    <div id="t27b" class="tabcontent hidden" style="display:none">Content B</div>
+    <div id="t27c" class="tabcontent hidden" style="display:none">Content C</div>
+  </div>
+</section>
+
+<!-- 28 -->
+<section id="task28">
+  <h2>28. Event delegation on a list</h2>
+  <div class="card">
+    <ul id="t28list">
+      <li data-id="1">Item 1</li>
+      <li data-id="2">Item 2</li>
+      <li data-id="3">Item 3</li>
+    </ul>
+    <p>Clicked: <span id="t28out">—</span></p>
+  </div>
+</section>
+
+<!-- 29 -->
+<section id="task29">
+  <h2>29. Dynamically generate cards from JSON</h2>
+  <div class="card">
+    <button id="t29gen">Generate Cards</button>
+    <div id="t29grid" class="card-grid" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<!-- 30 -->
+<section id="task30">
+  <h2>30. Real-time search filter</h2>
+  <div class="card">
+    <input id="t30q" placeholder="Search..." />
+    <ul id="t30list">
+      <li>Apple</li><li>Banana</li><li>Cherry</li><li>Date</li><li>Elderberry</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 31 -->
+<section id="task31">
+  <h2>31. Custom dropdown (basic)</h2>
+  <div class="card">
+    <div id="t31custom" style="border:1px solid #ccc;padding:8px;width:200px;user-select:none">
+      <div id="t31selected">Select an option</div>
+      <ul id="t31options" style="list-style:none;padding:6px;margin:6px 0;border-top:1px solid #eee;display:none">
+        <li data-val="1">One</li>
+        <li data-val="2">Two</li>
+        <li data-val="3">Three</li>
+      </ul>
+    </div>
+    <p>Value: <span id="t31val">—</span></p>
+  </div>
+</section>
+
+<!-- 32 -->
+<section id="task32">
+  <h2>32. Collapsible accordion</h2>
+  <div class="card">
+    <div class="accordion-item"><button class="acc-btn">Section 1</button><div class="acc-body hidden">Content 1</div></div>
+    <div class="accordion-item"><button class="acc-btn">Section 2</button><div class="acc-body hidden">Content 2</div></div>
+    <div class="accordion-item"><button class="acc-btn">Section 3</button><div class="acc-body hidden">Content 3</div></div>
+  </div>
+</section>
+
+<!-- 33 -->
+<section id="task33">
+  <h2>33. Rating component (stars)</h2>
+  <div class="card">
+    <div id="t33stars"></div>
+    <p>Rating: <span id="t33out">0</span></p>
+  </div>
+</section>
+
+<!-- 34 -->
+<section id="task34">
+  <h2>34. Shopping cart UI (add/remove)</h2>
+  <div class="card">
+    <div class="row">
+      <button data-id="p1" class="t34add">Add Product A</button>
+      <button data-id="p2" class="t34add">Add Product B</button>
+    </div>
+    <h4>Cart</h4>
+    <ul id="t34cart"></ul>
+  </div>
+</section>
+
+<!-- 35 -->
+<section id="task35">
+  <h2>35. Dynamic progress bar</h2>
+  <div class="card">
+    <div class="progress" style="width:100%"><div id="t35bar" style="background:lightgreen;width:0%"></div></div>
+    <div class="row">
+      <button id="t35inc">Increase</button>
+      <button id="t35reset">Reset</button>
+    </div>
+  </div>
+</section>
+
+<!-- 36 -->
+<section id="task36">
+  <h2>36. Digital clock (updates every second)</h2>
+  <div class="card">
+    <p id="t36clock" style="font-size:18px"></p>
+  </div>
+</section>
+
+<!-- 37 -->
+<section id="task37">
+  <h2>37. Timer / Countdown app</h2>
+  <div class="card">
+    <input id="t37input" type="number" value="10" min="1" /> seconds
+    <button id="t37start">Start</button>
+    <p>Remaining: <span id="t37out">—</span></p>
+  </div>
+</section>
+
+<!-- 38 -->
+<section id="task38">
+  <h2>38. Comment system (add comments with timestamp)</h2>
+  <div class="card">
+    <input id="t38name" placeholder="Name" />
+    <br/><textarea id="t38msg" rows="3" cols="40" placeholder="Comment..."></textarea><br/>
+    <button id="t38post">Post</button>
+    <ul id="t38list"></ul>
+  </div>
+</section>
+
+<!-- 39 -->
+<section id="task39">
+  <h2>39. Infinite scroll (append more items)</h2>
+  <div class="card" id="t39wrap" style="height:180px;overflow:auto;padding:8px;border:1px solid #ddd">
+    <ul id="t39list"></ul>
+  </div>
+</section>
+
+<!-- 40 -->
+<section id="task40">
+  <h2>40. Dynamic form builder (add input fields)</h2>
+  <div class="card">
+    <button id="t40add">Add Field</button>
+    <form id="t40form">
+      <div id="t40fields"></div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</section>
+
+<!-- END TASKS -->
+
+<h1>DOM Practice — Tasks 41 to 50</h1>
+
+<!-- Task 41: Variable type checker -->
+<section id="task41">
+  <h2>41. Variable type checker</h2>
+  <div class="card">
+    <input id="t41input" placeholder="Enter anything" />
+    <button id="t41btn">Check Type</button>
+    <p>Type: <span id="t41out">—</span></p>
+  </div>
+</section>
+
+<!-- Task 42: Function call logger -->
+<section id="task42">
+  <h2>42. Function call logger</h2>
+  <div class="card">
+    <button id="t42btn">Call Functions</button>
+    <p>Check console for call stack order</p>
+  </div>
+</section>
+
+<!-- Task 43: Scope demo -->
+<section id="task43">
+  <h2>43. Scope demo</h2>
+  <div class="card">
+    <input id="t43input" placeholder="Enter value" />
+    <button id="t43btn">Show Scope</button>
+    <p>Result: <span id="t43out">—</span></p>
+  </div>
+</section>
+
+<!-- Task 44: FizzBuzz -->
+<section id="task44">
+  <h2>44. FizzBuzz generator</h2>
+  <div class="card">
+    <input id="t44input" type="number" placeholder="Enter number" />
+    <button id="t44btn">Generate</button>
+    <ul id="t44list"></ul>
+  </div>
+</section>
+
+<!-- Task 45: Object property editor -->
+<section id="task45">
+  <h2>45. Object property editor</h2>
+  <div class="card">
+    <input id="t45prop" placeholder="Property (name, age, email)" />
+    <input id="t45val" placeholder="Value" />
+    <button id="t45btn">Update Object</button>
+    <pre id="t45out"></pre>
+  </div>
+</section>
+
+<!-- Task 46: ES6 arrow & template literal -->
+<section id="task46">
+  <h2>46. ES6 arrow & template literal</h2>
+  <div class="card">
+    <button id="t46btn">Generate Cards</button>
+    <div id="t46grid" class="row"></div>
+  </div>
+</section>
+
+<!-- Task 47: Async API fetch demo -->
+<section id="task47">
+  <h2>47. Async API fetch demo</h2>
+  <div class="card">
+    <button id="t47btn">Fetch Users</button>
+    <pre id="t47out"></pre>
+  </div>
+</section>
+
+<!-- Task 48: Error handling input -->
+<section id="task48">
+  <h2>48. Error handling divide</h2>
+  <div class="card">
+    <input id="t48num" type="number" placeholder="Enter number" />
+    <button id="t48btn">Divide 100 by number</button>
+    <p>Result: <span id="t48out">—</span></p>
+  </div>
+</section>
+
+<!-- Task 49: Class & Constructor -->
+<section id="task49">
+  <h2>49. Class & Constructor demo</h2>
+  <div class="card">
+    <input id="t49name" placeholder="Name" />
+    <input id="t49age" type="number" placeholder="Age" />
+    <button id="t49btn">Add Person</button>
+    <ul id="t49list"></ul>
+  </div>
+</section>
+
+<!-- Task 50: Event delegation -->
+<section id="task50">
+  <h2>50. Event delegation demo</h2>
+  <div class="card">
+    <div id="t50container"></div>
+    <button id="t50add">Add Button</button>
+    <p>Clicked: <span id="t50out">None</span></p>
+  </div>
+</section>
+
+
+
+<script>
+/* Utility */ 
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+/* Task 1 */
+function initTask1() {
+  // Button ko select karo
+  var button = document.querySelector("#t1btn");
+
+  // Input field ko select karo
+  var input = document.querySelector("#t1input");
+
+  // Paragraph ko select karo
+  var paragraph = document.querySelector("#t1text");
+
+  // Button pe click event lagao
+  button.addEventListener("click", function() {
+    // Input ki value le lo
+    var value = input.value;
+
+    // Paragraph ka text change karo
+    if(value) {
+      paragraph.textContent = value;
+    } else {
+      paragraph.textContent = "No text provided";
+    }
+  });
+}
+
+
+
+function initTask2() {
+  // Button, input aur boxes select karo
+  var button = document.querySelector("#t2btn");
+  var colorInput = document.querySelector("#t2color");
+  var boxes = document.querySelectorAll(".to-change");
+
+  // Button click event
+  button.addEventListener("click", function() {
+    var color = colorInput.value;
+    // Saare boxes ka background change karo
+    boxes.forEach(function(box) {
+      box.style.background = color;
+    });
+  });
+}
+
+function initTask3() {
+  // Button, input aur image select karo
+  var button = document.querySelector("#t3btn");
+  var input = document.querySelector("#t3src");
+  var image = document.querySelector("#t3img");
+
+  // Button click event
+  button.addEventListener("click", function() {
+    var url = input.value.trim();
+    if(url) {
+      image.src = url; // Image ka src change karo
+    }
+  });
+}
+
+function initTask4() {
+  var button = document.querySelector("#t4btn");
+  var input = document.querySelector("#t4txt");
+  var div = document.querySelector("#t4div");
+
+  button.addEventListener("click", function() {
+    var text = input.value || "New paragraph";
+    var p = document.createElement("p");
+    p.textContent = text;
+    div.appendChild(p);
+    input.value = "";
+  });
+}
+
+function initTask5() {
+  var removeBtn = document.querySelector("#t5remove");
+  var addBtn = document.querySelector("#t5add");
+  var ul = document.querySelector("#t5ul");
+
+  removeBtn.addEventListener("click", function() {
+    if(ul.lastElementChild) {
+      ul.removeChild(ul.lastElementChild);
+    }
+  });
+
+  addBtn.addEventListener("click", function() {
+    var li = document.createElement("li");
+    li.textContent = "Item " + (ul.children.length + 1);
+    ul.appendChild(li);
+  });
+}
+
+
+
+function initTask6() {
+  var button = document.querySelector("#t6btn");
+  var input = document.querySelector("#t6input");
+  var output = document.querySelector("#t6out");
+
+  button.addEventListener("click", function() {
+    output.textContent = input.value || " (empty) ";
+  });
+}
+
+
+
+function initTask7() {
+  var button = document.querySelector("#t7btn");
+  var colorInput = document.querySelector("#t7color");
+  var sizeInput = document.querySelector("#t7size");
+  var paragraph = document.querySelector("#t7p");
+
+  button.addEventListener("click", function() {
+    paragraph.style.color = colorInput.value;
+    paragraph.style.fontSize = sizeInput.value ;
+  });
+}
+
+
+
+function initTask8() {
+  var button = document.querySelector("#t8btn");
+  var items = document.querySelectorAll(".item");
+
+  button.addEventListener("click", function() {
+    for(var i = 0; i < items.length; i++) {
+      var el = items[i];
+      el.style.background = i % 2 === 0 ? "#fed" : "#def";
+      el.style.padding = "6px";
+      el.style.borderRadius = "4px";
+    }
+  });
+}
+
+
+
+function initTask9() {
+  var button = document.querySelector("#t9btn");
+  var paragraph = document.querySelector("#t9p");
+
+  button.addEventListener("click", function() {
+    paragraph.classList.toggle("highlight");
+  });
+}
+
+
+
+
+function initTask10() {
+  var button = document.querySelector("#t10btn");
+  var box = document.querySelector("#t10box");
+
+  button.addEventListener("click", function() {
+    box.innerHTML = "<strong>New</strong> <em>HTML</em> content: " + new Date().toLocaleTimeString();
+  });
+}
+
+
+/* Task 11 – Add item to UL from input */
+function initTask11() {
+  var button = document.querySelector("#t11btn");
+  var input = document.querySelector("#t11input");
+  var ul = document.querySelector("#t11ul");
+
+  button.addEventListener("click", function() {
+    var value = (input.value || "New item").trim();
+    var li = document.createElement("li");
+    li.textContent = value;
+    ul.appendChild(li);
+    input.value = "";
+  });
+}
+
+/* Task 12 – Simple counter */
+function initTask12() {
+  var count = 0;
+  var display = document.querySelector("#t12display");
+  var plusBtn = document.querySelector("#t12plus");
+  var minusBtn = document.querySelector("#t12minus");
+
+  plusBtn.addEventListener("click", function() {
+    count++;
+    display.textContent = count;
+  });
+
+  minusBtn.addEventListener("click", function() {
+    count--;
+    display.textContent = count;
+  });
+}
+
+/* Task 13 – Toggle element visibility */
+function initTask13() {
+  var button = document.querySelector("#t13btn");
+  var content = document.querySelector("#t13content");
+
+  button.addEventListener("click", function() {
+    content.style.display = (content.style.display === "none") ? "" : "none";
+  });
+
+  // start visible
+  content.style.display = "";
+}
+
+/* Task 14 – Simple form validation */
+function initTask14() {
+  var button = document.querySelector("#t14btn");
+  var input = document.querySelector("#t14");
+  var error = document.querySelector("#t14err");
+
+  button.addEventListener("click", function() {
+    var val = input.value.trim();
+    error.textContent = val ? "OK" : "Please fill this field";
+  });
+}
+
+/* Task 15 – Toggle dark class */
+function initTask15() {
+  var button = document.querySelector("#t15btn");
+  var area = document.querySelector("#t15area");
+
+  button.addEventListener("click", function() {
+    area.classList.toggle("dark");
+  });
+}
+
+/* Task 16 – Hover effect */
+function initTask16() {
+  var box = document.querySelector("#t16box");
+
+  box.addEventListener("mouseenter", function() {
+    box.style.transform = "scale(1.03)";
+    box.style.background = "#f0f8ff";
+  });
+
+  box.addEventListener("mouseleave", function() {
+    box.style.transform = "";
+    box.style.background = "";
+  });
+}
+
+/* Task 17 – Dropdown toggle and outside click */
+function initTask17() {
+  var button = document.querySelector("#t17btn");
+  var menu = document.querySelector("#t17menu");
+
+  button.addEventListener("click", function() {
+    menu.style.display = (menu.style.display === "none" || !menu.style.display) ? "block" : "none";
+  });
+
+  document.addEventListener("click", function(e) {
+    if (!button.contains(e.target) && !menu.contains(e.target)) {
+      menu.style.display = "none";
+    }
+  });
+}
+
+/* Task 18 – Set and get link href */
+function initTask18() {
+  var setBtn = document.querySelector("#t18set");
+  var getBtn = document.querySelector("#t18get");
+  var input = document.querySelector("#t18href");
+  var link = document.querySelector("#t18link");
+  var output = document.querySelector("#t18out");
+
+  setBtn.addEventListener("click", function() {
+    var href = input.value.trim() || "#";
+    link.setAttribute("href", href);
+    output.textContent = href;
+  });
+
+  getBtn.addEventListener("click", function() {
+    output.textContent = link.getAttribute("href");
+  });
+}
+
+/* Task 19 – Enable/disable input */
+function initTask19() {
+  var toggleBtn = document.querySelector("#t19toggle");
+  var target = document.querySelector("#t19target");
+
+  toggleBtn.addEventListener("click", function() {
+    target.disabled = !target.disabled;
+    toggleBtn.textContent = target.disabled ? "Enable" : "Disable";
+  });
+}
+
+/* Task 20 – Count characters in textarea */
+function initTask20() {
+  var textarea = document.querySelector("#t20ta");
+  var countDisplay = document.querySelector("#t20count");
+
+  textarea.addEventListener("input", function(event) {
+    countDisplay.textContent = event.target.value.length;
+  });
+}
+
+/* Task 21 – Generate table from data */
+function initTask21() {
+  var data = [
+    {id:1, name:'Alice', age:28},
+    {id:2, name:'Bob', age:34},
+    {id:3, name:'Clara', age:22}
+  ];
+  var button = document.querySelector("#t21gen");
+  var output = document.querySelector("#t21out");
+
+  button.addEventListener("click", function() {
+    var table = document.createElement("table");
+    table.border = 1;
+
+    var thead = document.createElement("tr");
+    ["ID","Name","Age"].forEach(function(h) {
+      var th = document.createElement("th");
+      th.textContent = h;
+      thead.appendChild(th);
+    });
+    table.appendChild(thead);
+
+    data.forEach(function(r) {
+      var tr = document.createElement("tr");
+      [r.id,r.name,r.age].forEach(function(v) {
+        var td = document.createElement("td");
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+
+    output.innerHTML = "";
+    output.appendChild(table);
+  });
+}
+
+/* Task 22 – Todo list with Edit/Delete */
+function initTask22() {
+  var addBtn = document.querySelector("#t22add");
+  var input = document.querySelector("#t22input");
+  var list = document.querySelector("#t22list");
+
+  addBtn.addEventListener("click", function() {
+    var v = input.value.trim();
+    if(!v) return;
+
+    var li = document.createElement("li");
+    li.textContent = v + " ";
+
+    var edit = document.createElement("button");
+    edit.textContent = "Edit";
+    edit.addEventListener("click", function() {
+      var newVal = prompt("Edit task", v);
+      if(newVal !== null) li.firstChild.textContent = newVal + " ";
+    });
+
+    var del = document.createElement("button");
+    del.textContent = "Delete";
+    del.addEventListener("click", function() { li.remove(); });
+
+    li.appendChild(edit);
+    li.appendChild(del);
+    list.appendChild(li);
+    input.value = "";
+  });
+}
+
+/* Task 23 – Image carousel */
+function initTask23() {
+  var imgs = [
+    'https://via.placeholder.com/250/ff4444?text=1',
+    'https://via.placeholder.com/250/44ff44?text=2',
+    'https://via.placeholder.com/250/4444ff?text=3'
+  ];
+  var i = 0;
+  var imgEl = document.querySelector("#t23img");
+  var nextBtn = document.querySelector("#t23next");
+  var prevBtn = document.querySelector("#t23prev");
+
+  nextBtn.addEventListener("click", function() {
+    i = (i+1) % imgs.length;
+    imgEl.src = imgs[i];
+  });
+
+  prevBtn.addEventListener("click", function() {
+    i = (i-1+imgs.length) % imgs.length;
+    imgEl.src = imgs[i];
+  });
+}
+
+/* Task 24 – Drag & Drop */
+function initTask24() {
+  var src = document.querySelector("#t24source");
+  var tgt = document.querySelector("#t24target");
+  var msg = document.querySelector("#t24msg");
+
+  src.setAttribute("draggable", "true");
+  src.addEventListener("dragstart", function(e) {
+    e.dataTransfer.setData("text/plain","hello");
+  });
+
+  tgt.addEventListener("dragover", function(e) { e.preventDefault(); });
+  tgt.addEventListener("drop", function(e) {
+    e.preventDefault();
+    tgt.textContent = "Dropped!";
+    msg.textContent = "Item dropped successfully";
+  });
+}
+
+/* Task 25 – Modal open/close */
+function initTask25() {
+  var openBtn = document.querySelector("#t25open");
+  var closeBtn = document.querySelector("#t25close");
+  var modal = document.querySelector("#t25modal");
+
+  openBtn.addEventListener("click", function() { modal.style.display = "flex"; });
+  closeBtn.addEventListener("click", function() { modal.style.display = "none"; });
+}
+
+/* Task 26 – Simple form validation */
+function initTask26() {
+  var form = document.querySelector("#t26form");
+  var nameInput = document.querySelector("#t26name");
+  var emailInput = document.querySelector("#t26email");
+  var errDisplay = document.querySelector("#t26err");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var name = nameInput.value.trim();
+    var email = emailInput.value.trim();
+    var err = "";
+
+    if(name.length < 3) err = "Name must be 3+ chars";
+    if(!email.includes("@")) err += (err ? "; " : "") + "Enter a valid email";
+
+    errDisplay.textContent = err || "Form OK (no real submit)";
+  });
+}
+
+/* Task 27 – Tabs */
+function initTask27() {
+  var buttons = document.querySelectorAll(".tabs button");
+  buttons.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var t = btn.getAttribute("data-tab");
+      ["a","b","c"].forEach(function(x) {
+        var el = document.getElementById("t27"+x);
+        el.style.display = (x===t ? "" : "none");
+      });
+    });
+  });
+}
+
+/* Task 28 – Clickable list */
+function initTask28() {
+  var list = document.querySelector("#t28list");
+  var out = document.querySelector("#t28out");
+
+  list.addEventListener("click", function(e) {
+    var li = e.target.closest("li");
+    if(!li) return;
+    out.textContent = li.dataset.id;
+  });
+}
+
+/* Task 29 – Generate cards */
+function initTask29() {
+  var data = [
+    {title:'Card A', desc:'Description A'},
+    {title:'Card B', desc:'Description B'},
+    {title:'Card C', desc:'Description C'}
+  ];
+  var btn = document.querySelector("#t29gen");
+  var grid = document.querySelector("#t29grid");
+
+  btn.addEventListener("click", function() {
+    grid.innerHTML = "";
+    data.forEach(function(d) {
+      var card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = "<h4>" + d.title + "</h4><p>" + d.desc + "</p>";
+      grid.appendChild(card);
+    });
+  });
+}
+
+/* Task 30 – Search filter */
+function initTask30() {
+  var input = document.querySelector("#t30q");
+  var items = document.querySelectorAll("#t30list li");
+
+  input.addEventListener("input", function(e) {
+    var q = e.target.value.toLowerCase();
+    items.forEach(function(li) {
+      li.style.display = li.textContent.toLowerCase().includes(q) ? "" : "none";
+    });
+  });
+}
+
+/* Task 31 – Custom dropdown */
+function initTask31() {
+  var selected = document.querySelector("#t31selected");
+  var options = document.querySelector("#t31options");
+  var valDisplay = document.querySelector("#t31val");
+
+  selected.addEventListener("click", function() {
+    options.style.display = options.style.display === "none" || !options.style.display ? "block" : "none";
+  });
+
+  var lis = options.querySelectorAll("li");
+  lis.forEach(function(li) {
+    li.addEventListener("click", function() {
+      selected.textContent = li.textContent;
+      valDisplay.textContent = li.dataset.val;
+      options.style.display = "none";
+    });
+  });
+}
+
+/* Task 32 – Accordion */
+function initTask32() {
+  var buttons = document.querySelectorAll(".acc-btn");
+  buttons.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var body = btn.nextElementSibling;
+      body.style.display = body.style.display === "none" || !body.style.display ? "block" : "none";
+    });
+  });
+
+  var bodies = document.querySelectorAll(".acc-body");
+  bodies.forEach(function(b) { b.style.display = "none"; });
+}
+
+/* Task 33 – Star rating */
+function initTask33() {
+  var root = document.querySelector("#t33stars");
+  for(var i=1;i<=5;i++) {
+    (function(i){
+      var s = document.createElement("span");
+      s.className = "star";
+      s.textContent = "☆";
+      s.dataset.value = i;
+      s.addEventListener("click", function() {
+        document.querySelector("#t33out").textContent = i;
+        var stars = root.querySelectorAll(".star");
+        stars.forEach(function(st){
+          st.textContent = st.dataset.value <= i ? "★" : "☆";
+        });
+      });
+      root.appendChild(s);
+    })(i);
+  }
+}
+
+/* Task 34 – Simple shopping cart */
+function initTask34() {
+  var cart = {};
+  function renderCart() {
+    var ul = document.querySelector("#t34cart");
+    ul.innerHTML = "";
+    Object.entries(cart).forEach(function(entry) {
+      var li = document.createElement("li");
+      li.textContent = entry[0] + " x " + entry[1] + " ";
+      var btn = document.createElement("button");
+      btn.textContent = "Remove";
+      btn.addEventListener("click", function() {
+        delete cart[entry[0]];
+        renderCart();
+      });
+      li.appendChild(btn);
+      ul.appendChild(li);
+    });
+  }
+
+  var buttons = document.querySelectorAll(".t34add");
+  buttons.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      var id = btn.dataset.id;
+      cart[id] = (cart[id]||0)+1;
+      renderCart();
+    });
+  });
+}
+
+/* Task 35 – Progress bar */
+function initTask35() {
+  var pct = 0;
+  var bar = document.querySelector("#t35bar");
+  var inc = document.querySelector("#t35inc");
+  var reset = document.querySelector("#t35reset");
+
+  inc.addEventListener("click", function() {
+    pct = Math.min(100, pct+10);
+    bar.style.width = pct + "%";
+  });
+
+  reset.addEventListener("click", function() {
+    pct = 0;
+    bar.style.width = "0%";
+  });
+}
+
+/* Task 36 – Clock */
+function initTask36() {
+  var clock = document.querySelector("#t36clock");
+  function tick() { clock.textContent = new Date().toLocaleTimeString(); }
+  tick();
+  setInterval(tick,1000);
+}
+
+/* Task 37 – Countdown timer */
+function initTask37() {
+  var startBtn = document.querySelector("#t37start");
+  var input = document.querySelector("#t37input");
+  var out = document.querySelector("#t37out");
+  var timer = null;
+
+  startBtn.addEventListener("click", function() {
+    var s = parseInt(input.value,10) || 0;
+    out.textContent = s;
+    if(timer) clearInterval(timer);
+
+    timer = setInterval(function() {
+      s--;
+      out.textContent = s;
+      if(s<=0) {
+        clearInterval(timer);
+        timer=null;
+        out.textContent = "Done";
+      }
+    },1000);
+  });
+}
+
+/* Task 38 – Comments list */
+function initTask38() {
+  var postBtn = document.querySelector("#t38post");
+  var nameInput = document.querySelector("#t38name");
+  var msgInput = document.querySelector("#t38msg");
+  var list = document.querySelector("#t38list");
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  postBtn.addEventListener("click", function() {
+    var name = nameInput.value.trim() || "Anon";
+    var msg = msgInput.value.trim();
+    if(!msg) return alert("Enter comment");
+
+    var li = document.createElement("li");
+    li.innerHTML = "<strong>" + escapeHtml(name) + "</strong> (" + new Date().toLocaleString() + "): <div>" + escapeHtml(msg) + "</div>";
+    list.prepend(li);
+    msgInput.value = "";
+  });
+}
+
+/* Task 39 – Infinite scroll list */
+function initTask39() {
+  var list = document.querySelector("#t39list");
+  var wrap = document.querySelector("#t39wrap");
+  var page = 0;
+
+  function loadMore() {
+    for(var i=0;i<10;i++) {
+      var li = document.createElement("li");
+      li.textContent = "Item " + (page*10+i+1);
+      list.appendChild(li);
+    }
+    page++;
+  }
+
+  loadMore();
+  wrap.addEventListener("scroll", function() {
+    if(wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight - 10) loadMore();
+  });
+}
+
+/* Task 40 – Dynamic form fields */
+function initTask40() {
+  var addBtn = document.querySelector("#t40add");
+  var fields = document.querySelector("#t40fields");
+  var form = document.querySelector("#t40form");
+
+  addBtn.addEventListener("click", function() {
+    var idx = fields.children.length + 1;
+    var div = document.createElement("div");
+    div.innerHTML = '<input name="field'+idx+'" placeholder="Field '+idx+'" /> <button type="button" class="remove">Remove</button>';
+    div.querySelector(".remove").addEventListener("click", function() { div.remove(); });
+    fields.appendChild(div);
+  });
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    var out = {};
+    for(var pair of data.entries()) out[pair[0]] = pair[1];
+    alert("Form data: " + JSON.stringify(out));
+  });
+}
+
+/* Task 41 */
+function initTask41() {
+  var input = document.querySelector("#t41input");
+  var out = document.querySelector("#t41out");
+  document.querySelector("#t41btn").addEventListener("click", function(){
+    var val = input.value;
+    var type = isNaN(val) || val.trim()==="" ? typeof val : "number";
+    out.textContent = type;
+  });
+}
+
+/* Task 42 */
+function initTask42() {
+  function f1(){ console.log("f1"); f2(); }
+  function f2(){ console.log("f2"); f3(); }
+  function f3(){ console.log("f3"); }
+  document.querySelector("#t42btn").addEventListener("click", function(){
+    f1();
+  });
+}
+
+/* Task 43 */
+function initTask43() {
+  var out = document.querySelector("#t43out");
+  var input = document.querySelector("#t43input");
+  var globalVar = "I am global";
+  function demoScope(){
+    var localVar = input.value || "Local value";
+    out.textContent = "Global: " + globalVar + ", Local: " + localVar;
+  }
+  document.querySelector("#t43btn").addEventListener("click", demoScope);
+}
+
+/* Task 44 */
+function initTask44() {
+  var input = document.querySelector("#t44input");
+  var list = document.querySelector("#t44list");
+  document.querySelector("#t44btn").addEventListener("click", function(){
+    var n = parseInt(input.value,10) || 0;
+    list.innerHTML = "";
+    for(var i=1;i<=n;i++){
+      var li = document.createElement("li");
+      li.textContent = (i%3===0 && i%5===0) ? "FizzBuzz" : (i%3===0 ? "Fizz" : (i%5===0 ? "Buzz" : i));
+      list.appendChild(li);
+    }
+  });
+}
+
+/* Task 45 */
+function initTask45() {
+  var obj = {name:"Alice", age:28, email:"alice@example.com"};
+  var out = document.querySelector("#t45out");
+  document.querySelector("#t45btn").addEventListener("click", function(){
+    var prop = document.querySelector("#t45prop").value.trim();
+    var val = document.querySelector("#t45val").value.trim();
+    if(obj.hasOwnProperty(prop)) obj[prop] = val;
+    out.textContent = JSON.stringify(obj, null,2);
+  });
+}
+
+/* Task 46 */
+function initTask46() {
+  var data = [{title:'A',desc:'Desc A'},{title:'B',desc:'Desc B'}];
+  var grid = document.querySelector("#t46grid");
+  document.querySelector("#t46btn").addEventListener("click", function(){
+    grid.innerHTML = "";
+    data.forEach(d => {
+      var card = document.createElement("div");
+      card.className="card";
+      card.innerHTML = `<h4>${d.title}</h4><p>${d.desc}</p>`;
+      grid.appendChild(card);
+    });
+  });
+}
+
+/* Task 47 */
+function initTask47() {
+  var out = document.querySelector("#t47out");
+  document.querySelector("#t47btn").addEventListener("click", async function(){
+    out.textContent = "Loading...";
+    try{
+      var res = await fetch("https://jsonplaceholder.typicode.com/users");
+      var data = await res.json();
+      out.textContent = JSON.stringify(data, null, 2);
+    } catch(e){
+      out.textContent = "Error fetching data";
+    }
+  });
+}
+
+/* Task 48 */
+function initTask48() {
+  var out = document.querySelector("#t48out");
+  document.querySelector("#t48btn").addEventListener("click", function(){
+    var num = parseFloat(document.querySelector("#t48num").value);
+    try{
+      if(num===0) throw new Error("Cannot divide by zero");
+      out.textContent = 100/num;
+    } catch(e){ out.textContent = e.message; }
+  });
+}
+
+/* Task 49 */
+function initTask49() {
+  class Person{
+    constructor(name,age){ this.name=name; this.age=age; }
+  }
+  var list = document.querySelector("#t49list");
+  document.querySelector("#t49btn").addEventListener("click", function(){
+    var name = document.querySelector("#t49name").value;
+    var age = parseInt(document.querySelector("#t49age").value,10);
+    if(!name || isNaN(age)) return alert("Enter valid data");
+    var p = new Person(name,age);
+    var li = document.createElement("li");
+    li.textContent = `${p.name} (${p.age})`;
+    list.appendChild(li);
+  });
+}
+
+/* Task 50 */
+function initTask50() {
+  var container = document.querySelector("#t50container");
+  var out = document.querySelector("#t50out");
+  var addBtn = document.querySelector("#t50add");
+
+  addBtn.addEventListener("click", function(){
+    var btn = document.createElement("button");
+    btn.textContent = "Btn " + (container.children.length+1);
+    container.appendChild(btn);
+  });
+
+  container.addEventListener("click", function(e){
+    if(e.target.tagName==="BUTTON"){
+      out.textContent = e.target.textContent;
+    }
+  });
+}
+
+
+
+
+/* Initialize all tasks */
+document.addEventListener('DOMContentLoaded', () => {
+  initTask1(); initTask2(); initTask3(); initTask4(); initTask5();
+  initTask6(); initTask7(); initTask8(); initTask9(); initTask10();
+  initTask11(); initTask12(); initTask13(); initTask14(); initTask15();
+  initTask16(); initTask17(); initTask18(); initTask19(); initTask20();
+  initTask21(); initTask22(); initTask23(); initTask24(); initTask25();
+  initTask26(); initTask27(); initTask28(); initTask29(); initTask30();
+  initTask31(); initTask32(); initTask33(); initTask34(); initTask35();
+  initTask36(); initTask37(); initTask38(); initTask39(); initTask40();
+  initTask41(); initTask42(); initTask43(); initTask44(); initTask45();
+  initTask46(); initTask47(); initTask48(); initTask49(); initTask50();
+});
+</script>
+</body>
+</html>
